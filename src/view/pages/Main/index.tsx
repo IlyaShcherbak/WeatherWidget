@@ -4,6 +4,9 @@ import React, { FC, useState } from 'react';
 // Components
 import { ErrorBoundary } from '../../components';
 
+// Containers
+import { TopBar } from '../../containers/TopBar';
+
 // Redux
 import { useCounter } from '../../../bus/counter';
 import { useMessages } from '../../../bus/messages';
@@ -24,6 +27,7 @@ const Main: FC = () => {
 
     return (
         <Container>
+            <TopBar />
             counterState: {counterState}
             <Button onClick = { () => void increment() }>+</Button>
             <Button onClick = { () => void decrement() }>-</Button>
