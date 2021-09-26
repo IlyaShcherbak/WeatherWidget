@@ -17,13 +17,15 @@ type PropTypes = {
     temperature: number,
     type: WeatherTypes,
     className?: string,
+    onDayClick?: () => void
 }
 
-export const Day: FC<PropTypes> = ({ day, temperature, type, className }) => {
+export const Day: FC<PropTypes> = ({ day, temperature, type, className, onDayClick }) => {
     return (
         <StyledDay
             className = { className }
-            img = { WeatrerImg[ type ] }>
+            img = { WeatrerImg[ type ] }
+            onClick = { onDayClick }>
             <p>{moment(day).format('dddd')}</p>
             <span>{temperature}</span>
         </StyledDay>

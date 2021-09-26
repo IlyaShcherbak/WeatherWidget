@@ -12,10 +12,9 @@ type PropTypes = {
 }
 
 export const WeatherCurrent: FC<PropTypes> = ({ day }) => {
-    console.log('weather data', day);
-    if (!day) {
-        return null;
-    }
+    // if (!day) {
+    //     return null;
+    // }
 
     return (
         <CurrentWeatherContainer>

@@ -1,5 +1,5 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useDays } from '../../../bus/days';
 
 // Components
@@ -10,7 +10,6 @@ import { ErrorBoundary,
     WeatherForecast as Forecast,
 } from '../../components';
 
-
 // Styles
 import { WeatherContainer, MainContainer } from './styles';
 
@@ -18,14 +17,24 @@ import { WeatherContainer, MainContainer } from './styles';
 const WeatherWidget: FC = () => {
     const { data } = useDays();
     console.log('🚀 ~ file: index.tsx ~ line 20 ~ data', data);
+    const [ currentDayIndex, setCurrentDayIndex ] = useState(0);
+
+    if (!data || data.length === 0) {
+        return null;
+    }
+    const currentDay = data[ currentDayIndex ];
 
     return (
         <WeatherContainer>
             <MainContainer>
                 <Filter/>
-                {data && <Header day = { data[ 0 ] }/>}
-                {data && <Current day = { data[ 0 ] }/>}
-                <Forecast weatherData = { data }/>
+                <Header day = { currentDay }/>
+                <Current day = { currentDay }/>
+                <Forecast
+                    selectedDay = { currentDayIndex }
+                    setSelectDay = { setCurrentDayIndex }
+                    weatherData = { data }
+                />
             </MainContainer>
         </WeatherContainer>
     );

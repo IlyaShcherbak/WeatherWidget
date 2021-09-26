@@ -17,9 +17,9 @@ type PropTypes = {
 }
 
 export const WeatherHeader: FC<PropTypes> = ({ day }) => {
-    if (!day) {
-        return null;
-    }
+    // if (!day) {
+    //     return null;
+    // }
 
     return (
         <Head>
