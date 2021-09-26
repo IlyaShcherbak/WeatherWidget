@@ -6,6 +6,7 @@ import togglers from '../../bus/client/togglers';
 import errors from '../../bus/client/errors';
 import counter from '../../bus/counter/slice';
 import messages from '../../bus/messages/slice';
+import days from '../../bus/days/slice';
 
 // Middleware
 import { middleware, sagaMiddleware } from './middleware';
@@ -19,6 +20,7 @@ export const store = configureStore({
         errors,
         counter,
         messages,
+        days,
     },
     middleware,
     devTools: process.env.NODE_ENV !== 'production',

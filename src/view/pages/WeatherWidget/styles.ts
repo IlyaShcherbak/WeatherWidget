@@ -1,14 +1,16 @@
 // Core
 import styled from 'styled-components';
 
-// Styles
-import { EntityContainer, EntityHeader } from '../styles';
+// Image
+import bg from '../../../assets/images/bg.png';
 
-export const Container = styled(EntityContainer)`
-    background-color: ${({ theme }) => theme.second.containerBg};
+
+export const WeatherContainer = styled.section`
+    background-image: url(${bg});
+    background-size: auto;
 `;
 
-export const Header = styled(EntityHeader)`
-    background-color: ${({ theme }) => theme.second.anotherSecondary};
-    border-bottom: 1px solid #fff;
+export const MainContainer = styled.section`
+    margin: 0 auto;
+    width: 910px;
 `;

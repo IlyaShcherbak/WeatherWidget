@@ -1,39 +1,33 @@
 // Core
 import React, { FC } from 'react';
+import { useDays } from '../../../bus/days';
 
 // Components
-import { ErrorBoundary } from '../../components';
+import { ErrorBoundary,
+    WeatherHeader as Header,
+    WeatherFilter as Filter,
+    WeatherCurrent as Current,
+    WeatherForecast as Forecast,
+} from '../../components';
 
-// Redux
-// import { useCounter } from '../../../bus/counter';
-// import { useMessages } from '../../../bus/messages';
-
-// Elements
-// import { Button } from '../../elements';
 
 // Styles
-import { Container } from './styles';
+import { WeatherContainer, MainContainer } from './styles';
+
 
 const WeatherWidget: FC = () => {
-    // const [ amount, setAmount ] = useState<number>(0);
-    // const { counterState, increment, decrement, incrementByAmount } = useCounter();
-    // const { messages, loading } = useMessages();
-
-    // console.log('🚀', messages);
-    // console.log('🚀', loading);
+    const { data } = useDays();
+    console.log('🚀 ~ file: index.tsx ~ line 20 ~ data', data);
 
     return (
-        <Container>
-            <p>Weather widget wiil be here</p>
-            {/* counterState: {counterState}
-            <Button onClick = { () => void increment() }>+</Button>
-            <Button onClick = { () => void decrement() }>-</Button>
-            <input
-                value = { amount }
-                onChange = { (event) => void setAmount(parseInt(event.target.value, 10)) }
-            />
-            <Button onClick = { () => void incrementByAmount(amount) }>incrementByAmount</Button> */}
-        </Container>
+        <WeatherContainer>
+            <MainContainer>
+                <Filter/>
+                {data && <Header day = { data[ 0 ] }/>}
+                {data && <Current day = { data[ 0 ] }/>}
+                <Forecast weatherData = { data }/>
+            </MainContainer>
+        </WeatherContainer>
     );
 };
 

@@ -1,5 +1,5 @@
-// Core
-import { PayloadAction } from '@reduxjs/toolkit';
+// // Core
+// import { PayloadAction } from '@reduxjs/toolkit';
 
 // Types
 import * as types from './types';
@@ -12,6 +12,6 @@ export const decrement: types.DecrementContract = (state) => {
     state.value -= 1;
 };
 
-export const incrementByAmount: types.IncrementByAmountContract = (state, action: PayloadAction<number>) => {
+export const incrementByAmount: types.IncrementByAmountContract = (state, action) => {
     state.value = action.payload;
 };
