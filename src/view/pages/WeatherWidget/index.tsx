@@ -33,8 +33,6 @@ const WeatherWidget: FC = () => {
     if (isFetching || !findedDay) {
         return <div>Loading...</div>;
     }
-    console.log('filteredDays', filteredDays);
-
 
     return (
         <WeatherContainer>

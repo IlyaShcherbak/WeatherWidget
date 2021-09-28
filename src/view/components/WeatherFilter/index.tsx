@@ -30,7 +30,6 @@ const initialState: StateType = {
 
 export const WeatherFilter: FC<PropTypes> = ({ setMinTemperature, setMaxTemperature, setTypeWeather }) => {
     const [ filters, handleChange, handeRadioGroupChange ] = useForm<StateType, WeatherTypes>(initialState);
-    console.log({ filters });
 
     return (
         <FilterContainer>

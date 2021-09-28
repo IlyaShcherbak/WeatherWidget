@@ -15,7 +15,6 @@ export const useStateFilter = ()=>{
     const { stateFilter, days } = useSelector((state) => state);
 
     const findedDay = days?.find((day) => day.id === stateFilter.selectedDay);
-    console.log(days);
 
     const filteredDays = days.filter(({ temperature, type }) => {
         const { minTemperature, maxTemperature, weatherType  } = stateFilter;
