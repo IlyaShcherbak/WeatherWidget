@@ -4,8 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 // Reducers
 import togglers from '../../bus/client/togglers';
 import errors from '../../bus/client/errors';
-import counter from '../../bus/counter/slice';
-import messages from '../../bus/messages/slice';
+import stateFilter from '../../bus/client/stateFilter/slice';
 import days from '../../bus/days/slice';
 
 // Middleware
@@ -17,9 +16,8 @@ import { rootSaga } from './rootSaga';
 export const store = configureStore({
     reducer: {
         togglers,
+        stateFilter,
         errors,
-        counter,
-        messages,
         days,
     },
     middleware,
@@ -27,6 +25,5 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
 
 sagaMiddleware.run(rootSaga);

@@ -17,16 +17,17 @@ type PropTypes = {
 }
 
 export const WeatherHeader: FC<PropTypes> = ({ day }) => {
-    // if (!day) {
-    //     return null;
-    // }
-
     return (
         <Head>
-            <CurrentIcon imgWeather = { WeatrerImg[ day.type ] }></CurrentIcon>
+            <CurrentIcon imgWeather = {
+                day?.type
+                    ? WeatrerImg[ day.type ]
+                    : ''
+            }>
+            </CurrentIcon>
             <CurrentDate>
-                <WeekDay>{moment(day.day).format('dddd')}</WeekDay>
-                <MonthDay>{moment(day.day).format('D MMMM')}</MonthDay>
+                <WeekDay>{moment(day?.day).format('dddd')}</WeekDay>
+                <MonthDay>{moment(day?.day).format('D MMMM')}</MonthDay>
             </CurrentDate>
         </Head>
     );

@@ -20,11 +20,6 @@ export const Private: FC = () => {
 
     return (
         <Switch>
-            {/* <Route
-                exact
-                path = { book.root }>
-                <Main />
-            </Route> */}
             <Route
                 exact
                 path = { book.weatherWidget }>

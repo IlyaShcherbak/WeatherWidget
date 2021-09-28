@@ -8,14 +8,16 @@ import { useSelector } from '../../tools/hooks';
 // API
 import { fetchForecast } from './api/fetchDays';
 
-// Togglers
+// Redux
 import { useTogglersRedux } from '../client/togglers';
 
+// Actions
 import { daysActions } from './slice';
+import { stateFilterActions } from '../client/stateFilter/slice';
 
 export const useDays = () => {
     const dispatch = useDispatch();
-    const data = useSelector(({ days }) => days);
+    const days = useSelector(({ days }) => days);
     const { togglersRedux: { isDaysFetching }, setTogglerAction } = useTogglersRedux();
 
     useEffect(() => {
@@ -24,9 +26,11 @@ export const useDays = () => {
                 type:  'isDaysFetching',
                 value: true,
             });
-            const data = await fetchForecast();
 
-            dispatch(daysActions.setDays(data));
+            const result = await fetchForecast();
+
+            dispatch(daysActions.setDays(result));
+            dispatch(stateFilterActions.selectDay(result[ 0 ].id));
 
             setTogglerAction({
                 type:  'isDaysFetching',
@@ -36,7 +40,7 @@ export const useDays = () => {
     }, []);
 
     return {
-        data,
+        days,
         isFetching: isDaysFetching,
     };
 };

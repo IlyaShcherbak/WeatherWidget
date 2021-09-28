@@ -1,9 +1,4 @@
-type Book = {
-    root: string,
-    weatherWidget: string
-}
-
-export const book: Book = {
+export const book = {
     root:          '/',
     weatherWidget: '/WeatherWidget',
 };

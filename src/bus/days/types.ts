@@ -1,11 +1,13 @@
 // Core
 import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
-export enum WeatherTypes {
+export enum WeatherTypesEnum {
     cloudy = 'cloudy',
     rainy = 'rainy',
     sunny = 'sunny',
 }
+
+export type WeatherTypes = keyof typeof WeatherTypesEnum;
 
 export type Day = {
     id: string,

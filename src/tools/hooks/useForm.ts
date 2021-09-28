@@ -5,28 +5,49 @@ import { useState, ChangeEvent } from 'react';
 
 type HandleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>  | null, isNumber?: boolean) => void;
 
-export const useForm = <T>(initialValue: T): [T, HandleChange, (newInitialValue: T) => void, Function] => {
+export const useForm
+= <T, K extends T[keyof T]>(initialValue: T)
+: [T, HandleChange, (groupName: keyof T, value: K) => void, (newInitialValue: T) => void, Function] => {
     const [ form, setForm ] = useState(initialValue);
 
-    const handleChange: HandleChange = (event, isNumber) => {
+    const handleChange: HandleChange = (event) => {
         if (event === null) {
             return void setForm(initialValue);
         }
 
-        let value: string | number = event.target.value;
+        let value: string | number | null = event.target.value || null;
 
-        if (isNumber) {
-            value = value !== '' && parseInt(value, 10) >= 0  ? parseInt(value, 10) : 0;
+        const isNumber = event.target.type === 'number';
+        console.log(isNumber);
+
+        if (value && isNumber) {
+            value = parseInt(value, 10) >= 0  ? parseInt(value, 10) : null;
         }
 
         return void setForm({ ...form, [ event.target.name ]: value });
+    };
+
+    const handeRadioGroupChange = (groupName: keyof T, value: K) => {
+        if (!value) {
+            return;
+        }
+
+        const formValue = form[ groupName ];
+
+        let result = null;
+
+        if (!formValue || formValue !== value) {
+            result = value;
+        }
+
+        return void setForm({ ...form, [ groupName ]: result });
     };
 
     const setInitialForm = (newInitialValue: T) => void setForm(newInitialValue);
 
     const resetForm = () => void setForm(initialValue);
 
-    return [ form, handleChange, setInitialForm, resetForm ];
+    return [ form, handleChange, handeRadioGroupChange, setInitialForm, resetForm ];
 };
 
 type ArrayOfStringsForm = (initialValues: Array<string>) => [

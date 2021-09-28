@@ -1,6 +1,5 @@
 // Core
-import React, { FC, useState } from 'react';
-import { useDays } from '../../../bus/days';
+import React, { FC } from 'react';
 
 // Components
 import { ErrorBoundary,
@@ -10,30 +9,47 @@ import { ErrorBoundary,
     WeatherForecast as Forecast,
 } from '../../components';
 
+// Redux
+import { useDays } from '../../../bus/days';
+import { useStateFilter } from '../../../bus/client/stateFilter';
+
 // Styles
 import { WeatherContainer, MainContainer } from './styles';
 
 
 const WeatherWidget: FC = () => {
-    const { data } = useDays();
-    console.log('🚀 ~ file: index.tsx ~ line 20 ~ data', data);
-    const [ currentDayIndex, setCurrentDayIndex ] = useState(0);
+    const { isFetching } = useDays();
+    const {
+        findedDay,
+        filteredDays,
+        stateFilter: { selectedDay },
+        actions: {
+            selectDay,
+            selectMinTemperature,
+            selectMaxTemperature,
+            selectTypeWeather },
+    } = useStateFilter();
 
-    if (!data || data.length === 0) {
-        return null;
+    if (isFetching || !findedDay) {
+        return <div>Loading...</div>;
     }
-    const currentDay = data[ currentDayIndex ];
+    console.log('filteredDays', filteredDays);
+
 
     return (
         <WeatherContainer>
             <MainContainer>
-                <Filter/>
-                <Header day = { currentDay }/>
-                <Current day = { currentDay }/>
+                <Filter
+                    setMaxTemperature = { selectMaxTemperature }
+                    setMinTemperature = { selectMinTemperature }
+                    setTypeWeather = { selectTypeWeather }
+                />
+                <Header day = { findedDay }/>
+                <Current day = { findedDay }/>
                 <Forecast
-                    selectedDay = { currentDayIndex }
-                    setSelectDay = { setCurrentDayIndex }
-                    weatherData = { data }
+                    selectedDay = { selectedDay }
+                    setSelectDay = { selectDay }
+                    weatherData = { filteredDays }
                 />
             </MainContainer>
         </WeatherContainer>

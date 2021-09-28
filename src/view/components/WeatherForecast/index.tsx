@@ -12,8 +12,8 @@ import { Day } from '../index';
 
 type PropTypes = {
     weatherData: DaysState,
-    setSelectDay: (dayIndex: number) => void
-    selectedDay: number
+    setSelectDay: (dayIndex: string) => void
+    selectedDay: string | null
 }
 
 export const WeatherForecast: FC<PropTypes> = ({ weatherData, selectedDay, setSelectDay }) => {
@@ -23,12 +23,12 @@ export const WeatherForecast: FC<PropTypes> = ({ weatherData, selectedDay, setSe
         <Forecast>
             {weekWeater.map((value, index) => (
                 <Day
-                    className = { index === selectedDay ? 'selected' : '' }
+                    className = { value.id === selectedDay ? 'selected' : '' }
                     day = { value.day }
                     key = { `${value.id}+ ${index}` }
                     temperature = { value.temperature }
                     type = { value.type }
-                    onDayClick = { () => setSelectDay(index) }
+                    onDayClick = { () => setSelectDay(value.id) }
                 />
             ))}
         </Forecast>
