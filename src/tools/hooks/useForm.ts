@@ -18,7 +18,9 @@ export const useForm
         let value: string | number | null = event.target.value || null;
 
         const isNumber = event.target.type === 'number';
-
+        if (value === '0') {
+            return '';
+        }
         if (value && isNumber) {
             value = parseInt(value, 10) >= 0  ? parseInt(value, 10) : null;
         }

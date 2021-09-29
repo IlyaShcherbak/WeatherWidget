@@ -16,7 +16,7 @@ type PropTypes = {
     setTypeWeather:(dayType: WeatherTypes | null) => void,
 }
 
-type StateType = {
+export type StateType = {
     type: WeatherTypes | null,
     minTemp: number | null,
     maxTemp: number | null,

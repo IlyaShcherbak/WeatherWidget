@@ -8,6 +8,7 @@ import bg from '../../../assets/images/bg.png';
 export const WeatherContainer = styled.section`
     background-image: url(${bg});
     background-size: auto;
+    min-height: 100%;
 `;
 
 export const MainContainer = styled.section`

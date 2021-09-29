@@ -45,9 +45,9 @@ const WeatherWidget: FC = () => {
                 <Header day = { findedDay }/>
                 <Current day = { findedDay }/>
                 <Forecast
+                    Days = { filteredDays }
                     selectedDay = { selectedDay }
                     setSelectDay = { selectDay }
-                    weatherData = { filteredDays }
                 />
             </MainContainer>
         </WeatherContainer>

@@ -5,30 +5,38 @@ import React, { FC } from 'react';
 import { DaysState } from '../../../bus/days/types';
 
 // Styles
-import { Forecast } from './styles';
+import { Forecast, ErrorMessage } from './styles';
 
 // Components
 import { Day } from '../index';
 
 type PropTypes = {
-    weatherData: DaysState,
+    Days: DaysState,
     setSelectDay: (dayIndex: string) => void
     selectedDay: string | null
 }
 
-export const WeatherForecast: FC<PropTypes> = ({ weatherData, selectedDay, setSelectDay }) => {
-    const weekWeater = weatherData.slice(0, 7);
+export const WeatherForecast: FC<PropTypes> = ({ Days, selectedDay, setSelectDay }) => {
+    const weekDays = Days.slice(0, 7);
+
+    if (Days.length === 0) {
+        return (
+            <Forecast>
+                <ErrorMessage>Filter Error</ErrorMessage>
+            </Forecast>
+        );
+    }
 
     return (
         <Forecast>
-            {weekWeater.map((value, index) => (
+            {weekDays.map((day) => (
                 <Day
-                    className = { value.id === selectedDay ? 'selected' : '' }
-                    day = { value.day }
-                    key = { `${value.id}+ ${index}` }
-                    temperature = { value.temperature }
-                    type = { value.type }
-                    onDayClick = { () => setSelectDay(value.id) }
+                    className = { day.id === selectedDay ? 'selected' : '' }
+                    day = { day.day }
+                    key = { `${day.id}` }
+                    temperature = { day.temperature }
+                    type = { day.type }
+                    onDayClick = { () => setSelectDay(day.id) }
                 />
             ))}
         </Forecast>
