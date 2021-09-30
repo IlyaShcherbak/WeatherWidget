@@ -13,5 +13,6 @@ Used technologies : React, Redux, TypeScript, Styled-Components, Lodash, Moment.
     PUBLIC_URL=http://localhost:3000
     API_URL=http://localhost:4000
 }
+
 To start project:
 npm run [start|build]
