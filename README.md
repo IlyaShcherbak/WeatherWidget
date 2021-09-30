@@ -1,6 +1,7 @@
 Main 
 
 This is studying project "Weather Widget".
+
 Architecture based on the https://github.com/Arziburst/boilerplate
 
 Used technologies : React, Redux, TypeScript, Styled-Components, Lodash, Moment.
