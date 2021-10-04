@@ -2,7 +2,7 @@
 import { FetchDays } from './types';
 
 // Constants
-import { API_WEATHER_URL } from '../../../init';
+import { API_WEATHER_URL } from '../../../../init';
 
 export const fetchForecast: FetchDays = async () => {
     try {

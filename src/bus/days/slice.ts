@@ -7,10 +7,12 @@ import { DaysState } from './types';
 // Reducers
 import * as reducers from './reducers';
 
-const initialState: DaysState = [];
+const initialState: DaysState = {
+    days: [],
+};
 
 export const daysSlice = createSlice({
-    name: 'days',
+    name: 'weather',
     initialState,
     reducers,
 });

@@ -5,7 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import togglers from '../../bus/client/togglers';
 import errors from '../../bus/client/errors';
 import stateFilter from '../../bus/client/stateFilter/slice';
-import days from '../../bus/days/slice';
+import weather from '../../bus/days/slice';
 
 // Middleware
 import { middleware, sagaMiddleware } from './middleware';
@@ -18,7 +18,7 @@ export const store = configureStore({
         togglers,
         stateFilter,
         errors,
-        days,
+        weather,
     },
     middleware,
     devTools: process.env.NODE_ENV !== 'production',

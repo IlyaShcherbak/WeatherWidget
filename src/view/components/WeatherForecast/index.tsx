@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 
 // Types
-import { DaysState } from '../../../bus/days/types';
+import { Day as DayType } from '../../../bus/days/types';
 
 // Styles
 import { Forecast, ErrorMessage } from './styles';
@@ -11,7 +11,7 @@ import { Forecast, ErrorMessage } from './styles';
 import { Day } from '../index';
 
 type PropTypes = {
-    Days: DaysState,
+    Days: Array<DayType>,
     setSelectDay: (dayIndex: string) => void
     selectedDay: string | null
 }

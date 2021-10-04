@@ -1,8 +1,11 @@
 // Types
 import * as types from './types';
 
-export const setDays: types.SetDaysContract = (...args) => {
-    const [ , action ] = args;
+export const setDays: types.SetDaysContract = (state, action) => {
+    state.days = action.payload;
+    state.currentDay = action.payload[ 0 ];
+};
 
-    return action.payload;
+export const setCurrentWeather: types.SetCurrentDayContract = (state, action) => {
+    state.currentDay = state.days?.find((day) => day.id === action.payload);
 };

@@ -18,7 +18,12 @@ export type Day = {
     type: WeatherTypes,
 }
 
-export type DaysState = Array<Day>;
+export type DaysState = {
+    days: Array<Day>;
+    currentDay?: Day;
+}
 
 // Contracts
-export type SetDaysContract = CaseReducer<DaysState, PayloadAction<DaysState>>
+export type SetDaysContract = CaseReducer<DaysState, PayloadAction<Array<Day>>>;
+
+export type SetCurrentDayContract = CaseReducer<DaysState, PayloadAction<string>>;
