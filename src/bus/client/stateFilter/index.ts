@@ -8,47 +8,28 @@ import { useSelector } from '../../../tools/hooks';
 import { stateFilterActions } from './slice';
 
 // Types
-import { WeatherTypes, Day } from '../../days/types';
-import { daysActions } from '../../days/slice';
+import * as types from './types';
 
-export const useStateFilter = ()=>{
+export const useStateFilter = () => {
     const dispatch = useDispatch();
-    const { stateFilter, weather: { days, currentDay }} = useSelector((state) => state);
+    const { stateFilter } = useSelector((state) => state);
 
-    const filteredDays = days.filter(({ temperature, type }) => {
-        const { minTemperature, maxTemperature, weatherType  } = stateFilter;
-
-        if (maxTemperature && temperature > maxTemperature) {
-            return false;
-        } else if (minTemperature && temperature < minTemperature) {
-            return false;
-        } else if (weatherType && weatherType !== type) {
-            return false;
-        }
-
-        return true;
-    });
-
-    const selectMinTemperature = (temperature: number | null) => void dispatch(
-        stateFilterActions.selectMinTemperature(temperature),
+    const setFilters: types.SetFiltersHandlerContact = (filters) => void dispatch(
+        stateFilterActions.setFilters(filters),
     );
-    const selectMaxTemperature = (temperature: number | null) => void dispatch(
-        stateFilterActions.selectMaxTemperature(temperature),
+
+    const resetFilters = () => void dispatch(stateFilterActions.resetFilters());
+
+    const selectDay: types.SelectDayHandlerContract = (id) => void dispatch(
+        stateFilterActions.selectDay(id),
     );
-    const selectTypeWeather = (dayType: WeatherTypes | null) => void dispatch(
-        stateFilterActions.typeWeather(dayType),
-    );
-    const selectDay = (id: Day['id']) => void dispatch(daysActions.setCurrentWeather(id));
 
     return {
         stateFilter,
-        findedDay: currentDay,
-        filteredDays,
-        actions:   {
+        actions: {
             selectDay,
-            selectMinTemperature,
-            selectMaxTemperature,
-            selectTypeWeather,
+            setFilters,
+            resetFilters,
         },
     };
 };

@@ -2,11 +2,12 @@
 import React, { FC } from 'react';
 
 // Components
-import { ErrorBoundary,
-    WeatherHeader as Header,
-    WeatherFilter as Filter,
-    WeatherCurrent as Current,
-    WeatherForecast as Forecast,
+import {
+    ErrorBoundary,
+    WeatherHeader,
+    WeatherFilter,
+    WeatherCurrent,
+    WeatherForecast,
 } from '../../components';
 
 // Redux
@@ -16,37 +17,35 @@ import { useStateFilter } from '../../../bus/client/stateFilter';
 // Styles
 import { WeatherContainer, MainContainer } from './styles';
 
-
 const WeatherWidget: FC = () => {
-    const { isFetching } = useDays();
+    const { days, foundedDay, isFetching } = useDays();
     const {
-        findedDay,
-        filteredDays,
-        stateFilter: { selectedDay },
+        stateFilter,
         actions: {
             selectDay,
-            selectMinTemperature,
-            selectMaxTemperature,
-            selectTypeWeather },
+            setFilters,
+            resetFilters,
+        },
     } = useStateFilter();
 
-    if (isFetching || !findedDay) {
+
+    if (isFetching) {
         return <div>Loading...</div>;
     }
 
     return (
         <WeatherContainer>
             <MainContainer>
-                <Filter
-                    setMaxTemperature = { selectMaxTemperature }
-                    setMinTemperature = { selectMinTemperature }
-                    setTypeWeather = { selectTypeWeather }
+                <WeatherFilter
+                    resetFilters = { resetFilters }
+                    setFilters = { setFilters }
+                    stateFilter = { stateFilter }
                 />
-                <Header day = { findedDay }/>
-                <Current day = { findedDay }/>
-                <Forecast
-                    Days = { filteredDays }
-                    selectedDay = { selectedDay }
+                <WeatherHeader foundedDay = { foundedDay } />
+                <WeatherCurrent foundedDay = { foundedDay } />
+                <WeatherForecast
+                    days = { days }
+                    foundedDayId = { foundedDay?.id ?? null }
                     setSelectDay = { selectDay }
                 />
             </MainContainer>

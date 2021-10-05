@@ -6,12 +6,11 @@ import cloudyImg from '../../../assets/images/weather-icon-cloudy.png';
 import rainyImg from '../../../assets/images/weather-icon-rainy.png';
 import sunnyImg from '../../../assets/images/weather-icon-sunny.png';
 
-
-type WeatrerImgType = {
+type WeatherImgType = {
     [key in WeatherTypes]: string
 }
 
-export const WeatrerImg: WeatrerImgType = {
+export const WeatherIcons: WeatherImgType = {
     cloudy: cloudyImg,
     rainy:  rainyImg,
     sunny:  sunnyImg,

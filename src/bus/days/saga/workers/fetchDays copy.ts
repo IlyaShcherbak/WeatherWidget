@@ -1,19 +1,19 @@
 // Core
 import { call, put } from 'redux-saga/effects';
 
-// Bus
-import { togglerCreatorAction } from '../../../client/togglers';
-import { errorsActions } from '../../../client/errors';
+// Types
+import { Days } from '../../types';
 
-// Actions
+// Sync actions
 import { daysActions } from '../../slice';
 
 // Tools
 import { ControlledError, IControlledError } from '../../../../tools/utils';
 import { API_WEATHER_URL } from '../../../../init';
 
-// Types
-import { Days } from '../../types';
+// Bus
+import { togglerCreatorAction } from '../../../client/togglers';
+import { errorsActions } from '../../../client/errors';
 
 export function* fetchDays() {
     try {
@@ -31,7 +31,7 @@ export function* fetchDays() {
                     message:    'fetchForecast failed',
                     statusCode: response.status,
                     data:       {
-                        test: 'Fetch failed',
+                        test: '123',
                     },
                 });
             }
@@ -42,6 +42,8 @@ export function* fetchDays() {
         });
 
         yield put(daysActions.setDays(result));
+
+        // yield successSideEffect();
         // ------------- SUCCESS BLOCK END -------------
     } catch (error) {
         // ------------- ERROR BLOCK START -------------

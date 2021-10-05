@@ -1,18 +1,17 @@
+// Tools
+import { initialState } from './slice';
+
 // Types
 import * as types from './types';
 
-export const selectDay: types.SelectDayContract = (state, action) => {
-    state.selectedDay = action.payload;
+export const selectDay: types.SelectDayReducerContract = (state, action) => {
+    state.selectedDayId = action.payload;
 };
 
-export const selectMinTemperature:types.SelectTemperatureContract = (state, action) => {
-    state.minTemperature = action.payload;
-};
+export const setFilters: types.SetFiltersReducerContact = (state, action) => ({
+    ...state,
+    ...action.payload,
+});
 
-export const selectMaxTemperature: types.SelectTemperatureContract = (state, action) => {
-    state.maxTemperature = action.payload;
-};
+export const resetFilters = () => initialState;
 
-export const typeWeather: types.WeatherTypeContract = (state, action) => {
-    state.weatherType = action.payload;
-};

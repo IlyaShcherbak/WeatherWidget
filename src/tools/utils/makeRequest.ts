@@ -1,4 +1,5 @@
 // Core
+import { ActionCreator, AnyAction } from 'redux';
 import { put, call } from 'redux-saga/effects';
 
 // Redux
@@ -16,7 +17,7 @@ type OptionsType<T> = {
         type: string;
         payload: T;
     };
-    errorAction?: Function;
+    errorAction?: ActionCreator<AnyAction>;
     successSideEffect?: Function;
     errorSideEffect?: Function;
     isControlledMode?: boolean

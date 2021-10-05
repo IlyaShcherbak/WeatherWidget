@@ -6,7 +6,7 @@ import styled from 'styled-components';
 // import sunnyImg from '../../../assets/images/weather-icon-sunny.png';
 
 type weatherProps = {
-    imgWeather: string,
+    imgWeather?: string,
 };
 
 export const Head = styled.div`
@@ -25,7 +25,9 @@ export const Icon = styled.div`
 
 export const CurrentIcon = styled(Icon)<weatherProps>`
     width: 90px;
-    background-image: url(${ (props) => props.imgWeather });
+    ${({ imgWeather }) => imgWeather && {
+        backgroundImage: `url(${imgWeather})`,
+    } }
 `;
 
 export const CurrentDate = styled.div`

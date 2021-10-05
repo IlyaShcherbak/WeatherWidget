@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 
 // Types
-import { Day as DayType } from '../../../bus/days/types';
+import { Day as IDay } from '../../../bus/days/types';
 
 // Styles
 import { Forecast, ErrorMessage } from './styles';
@@ -11,15 +11,13 @@ import { Forecast, ErrorMessage } from './styles';
 import { Day } from '../index';
 
 type PropTypes = {
-    Days: Array<DayType>,
-    setSelectDay: (dayIndex: string) => void
-    selectedDay: string | null
+    days: Array<IDay>,
+    setSelectDay: (dayId: string) => void
+    foundedDayId: string | null
 }
 
-export const WeatherForecast: FC<PropTypes> = ({ Days, selectedDay, setSelectDay }) => {
-    const weekDays = Days.slice(0, 7);
-
-    if (Days.length === 0) {
+export const WeatherForecast: FC<PropTypes> = ({ days, foundedDayId, setSelectDay }) => {
+    if (days.length === 0) {
         return (
             <Forecast>
                 <ErrorMessage>Filter Error</ErrorMessage>
@@ -29,16 +27,18 @@ export const WeatherForecast: FC<PropTypes> = ({ Days, selectedDay, setSelectDay
 
     return (
         <Forecast>
-            {weekDays.map((day) => (
-                <Day
-                    className = { day.id === selectedDay ? 'selected' : '' }
-                    day = { day.day }
-                    key = { `${day.id}` }
-                    temperature = { day.temperature }
-                    type = { day.type }
-                    onDayClick = { () => setSelectDay(day.id) }
-                />
-            ))}
+            {
+                days.map((day) => (
+                    <Day
+                        className = { day.id === foundedDayId ? 'selected' : '' }
+                        day = { day.day }
+                        key = { `${day.id}` }
+                        temperature = { day.temperature }
+                        type = { day.type }
+                        onDayClick = { () => setSelectDay(day.id) }
+                    />
+                ))
+            }
         </Forecast>
     );
 };

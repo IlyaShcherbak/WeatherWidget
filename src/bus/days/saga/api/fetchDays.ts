@@ -4,18 +4,23 @@ import { FetchDays } from './types';
 // Constants
 import { API_WEATHER_URL } from '../../../../init';
 
+// Tools
+import { ControlledError } from '../../../../tools/utils';
+
 export const fetchForecast: FetchDays = async () => {
-    try {
-        const response = await fetch(API_WEATHER_URL);
+    const response = await fetch(API_WEATHER_URL);
 
-        if (response.status !== 200) {
-            throw Error('Failed forecast fetching');
-        }
-
-        const { data } = await response.json();
-
-        return data;
-    } catch (error) {
-        console.log(error);
+    if (response.status !== 200) {
+        throw new ControlledError({
+            message:    'fetchForecast failed',
+            statusCode: response.status,
+            data:       {
+                test: 'Fetch failed',
+            },
+        });
     }
+
+    const { data } = await response.json();
+
+    return data;
 };

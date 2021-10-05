@@ -8,16 +8,16 @@ import { Day } from '../../../bus/days/types';
 import { CurrentWeatherContainer, Temperature, Meta, Rainy, Humidity } from './styles';
 
 type PropTypes = {
-    day: Day
+    foundedDay?: Day
 }
 
-export const WeatherCurrent: FC<PropTypes> = ({ day }) => {
+export const WeatherCurrent: FC<PropTypes> = ({ foundedDay }) => {
     return (
         <CurrentWeatherContainer>
-            <Temperature>{day.temperature}</Temperature>
+            <Temperature>{foundedDay?.temperature}</Temperature>
             <Meta>
-                <Rainy>%{day.rain_probability}</Rainy>
-                <Humidity>%{day.humidity}</Humidity>
+                <Rainy>%{foundedDay?.rain_probability}</Rainy>
+                <Humidity>%{foundedDay?.humidity}</Humidity>
             </Meta>
         </CurrentWeatherContainer>
     );

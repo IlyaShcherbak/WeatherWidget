@@ -6,13 +6,17 @@ import { WeatherTypes, Day } from '../../days/types';
 
 // State
 export type StateFilter = {
-    selectedDay: Day['id'] | null
+    selectedDayId: Day['id'] | null
     minTemperature: number | null
     maxTemperature: number | null
     weatherType: WeatherTypes | null
 }
 
 // Contracts
-export type SelectDayContract = CaseReducer<StateFilter, PayloadAction<string>>
-export type SelectTemperatureContract = CaseReducer<StateFilter, PayloadAction<number | null>>
-export type WeatherTypeContract = CaseReducer<StateFilter, PayloadAction<WeatherTypes | null>>
+type SelectDayPayload = Day['id'] | null
+export type SelectDayReducerContract = CaseReducer<StateFilter, PayloadAction<SelectDayPayload>>
+export type SelectDayHandlerContract = (id: SelectDayPayload) => void
+
+type SetFilltersPayload = Partial<StateFilter>
+export type SetFiltersReducerContact = CaseReducer<StateFilter, PayloadAction<SetFilltersPayload>>
+export type SetFiltersHandlerContact = (filters: SetFilltersPayload) => void

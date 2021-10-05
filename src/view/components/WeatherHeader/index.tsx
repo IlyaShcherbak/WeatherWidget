@@ -9,25 +9,34 @@ import { Head, CurrentIcon, CurrentDate, WeekDay, MonthDay } from './styles';
 import { Day } from '../../../bus/days/types';
 
 // WeaterTypes
-import { WeatrerImg } from '../../pages/WeatherWidget/weaterTypes';
+import { WeatherIcons } from '../../pages/WeatherWidget/weaterTypes';
 
 
 type PropTypes = {
-    day: Day
+    foundedDay?: Day
 }
 
-export const WeatherHeader: FC<PropTypes> = ({ day }) => {
+export const WeatherHeader: FC<PropTypes> = ({ foundedDay }) => {
     return (
         <Head>
             <CurrentIcon imgWeather = {
-                day?.type
-                    ? WeatrerImg[ day.type ]
-                    : ''
+                foundedDay?.type
+                && WeatherIcons[ foundedDay.type ]
             }>
             </CurrentIcon>
             <CurrentDate>
-                <WeekDay>{moment(day?.day).format('dddd')}</WeekDay>
-                <MonthDay>{moment(day?.day).format('D MMMM')}</MonthDay>
+                <WeekDay>
+                    {
+                        foundedDay?.day
+                        && moment(foundedDay.day).format('dddd')
+                    }
+                </WeekDay>
+                <MonthDay>
+                    {
+                        foundedDay?.day
+                        && moment(foundedDay.day).format('D MMMM')
+                    }
+                </MonthDay>
             </CurrentDate>
         </Head>
     );

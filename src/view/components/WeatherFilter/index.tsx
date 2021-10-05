@@ -1,75 +1,98 @@
 // Core
-import React, { FC } from 'react';
-
-// Weather types
-import { WeatherTypes, WeatherTypesEnum } from '../../../bus/days/types';
+import React, { FC, useState } from 'react';
 
 // Hooks
 import { useForm } from '../../../tools/hooks';
 
 // Styles
-import { FilterContainer, Checkbox, CustomFieldsBox, CustomLabel, CustomInput, FilterButton } from './styles';
+import * as S from './styles';
+
+// Types
+import { WeatherTypes, WeatherTypesEnum } from '../../../bus/days/types';
+import { SetFiltersHandlerContact, StateFilter } from '../../../bus/client/stateFilter/types';
 
 type PropTypes = {
-    setMinTemperature:(temperature: number | null) => void,
-    setMaxTemperature:(temperature: number | null) => void,
-    setTypeWeather:(dayType: WeatherTypes | null) => void,
+    setFilters: SetFiltersHandlerContact
+    stateFilter: StateFilter
+    resetFilters: Function
 }
 
-export type StateType = {
-    type: WeatherTypes | null,
-    minTemp: number | null,
-    maxTemp: number | null,
+export type WeatherTypeStateType = WeatherTypes | null;
+const weatherTypeInitialState: WeatherTypeStateType = null;
+
+export type TemperatureStateType = {
+    minTemperature: number | null,
+    maxTemperature: number | null,
 }
 
-const initialState: StateType = {
-    type:    null,
-    minTemp: null,
-    maxTemp: null,
+const temperatureInitialState: TemperatureStateType = {
+    minTemperature: null,
+    maxTemperature: null,
 };
 
-export const WeatherFilter: FC<PropTypes> = ({ setMinTemperature, setMaxTemperature, setTypeWeather }) => {
-    const [ filters, handleChange, handeRadioGroupChange ] = useForm<StateType, WeatherTypes>(initialState);
+export const WeatherFilter: FC<PropTypes> = ({
+    setFilters, resetFilters, stateFilter,
+}) => {
+    const [
+        temperatureState,
+        setTemperatureState,
+        setInitialTemperatureState,
+    ] = useForm<TemperatureStateType>(temperatureInitialState);
+    const [ weatherTypeState, setWeatherTypeState ] = useState<WeatherTypeStateType>(weatherTypeInitialState);
+
+    const filters = {
+        ...temperatureState,
+        weatherType: weatherTypeState,
+    };
+
+    const isReduxFiltersFullfiled = Object.entries({
+        ...stateFilter,
+        selectedDayId: null, // насильственный костыль
+    }).some(([ , value ]) => value !== null);
+
+    const setFiltersHandler = () => {
+        if (isReduxFiltersFullfiled) {
+            resetFilters();
+            setInitialTemperatureState(temperatureInitialState);
+            setWeatherTypeState(weatherTypeInitialState);
+        } else {
+            setFilters(filters);
+        }
+    };
 
     return (
-        <FilterContainer>
-            <Checkbox
-                className = { filters.type === WeatherTypesEnum.cloudy ? 'selected' : '' }
-                onClick = { () => handeRadioGroupChange('type', WeatherTypesEnum.cloudy) }>
+        <S.FilterContainer>
+            <S.Checkbox
+                className = { weatherTypeState === WeatherTypesEnum.cloudy ? 'selected' : '' }
+                onClick = { () => setWeatherTypeState(WeatherTypesEnum.cloudy) }>
                 Cloudy
-            </Checkbox>
-            <Checkbox
-                className = { filters.type === WeatherTypesEnum.sunny ? 'selected' : '' }
-                onClick = { () => handeRadioGroupChange('type', WeatherTypesEnum.sunny) }>
+            </S.Checkbox>
+            <S.Checkbox
+                className = { weatherTypeState === WeatherTypesEnum.sunny ? 'selected' : '' }
+                onClick = { () => setWeatherTypeState(WeatherTypesEnum.sunny) }>
                 Sunny
-            </Checkbox>
-            <CustomFieldsBox>
-                <CustomLabel>Min temperature</CustomLabel>
-                <CustomInput
-                    id = 'min-temperature'
-                    name = 'minTemp'
+            </S.Checkbox>
+            <S.CustomFieldsBox>
+                <S.CustomLabel>Min temperature</S.CustomLabel>
+                <S.CustomInput
+                    name = 'minTemperature'
                     type = 'number'
-                    value = { filters.minTemp === null ? '' : filters.minTemp }
-                    onChange = { handleChange }
+                    value = { String(temperatureState.minTemperature ?? '') }
+                    onChange = { setTemperatureState }
                 />
-            </CustomFieldsBox>
-            <CustomFieldsBox>
-                <CustomLabel>Max temperature</CustomLabel>
-                <CustomInput
-                    id = 'max-temperature'
-                    name = 'maxTemp'
+            </S.CustomFieldsBox>
+            <S.CustomFieldsBox>
+                <S.CustomLabel>Max temperature</S.CustomLabel>
+                <S.CustomInput
+                    name = 'maxTemperature'
                     type = 'number'
-                    value = { filters.maxTemp === null ? '' : filters.maxTemp }
-                    onChange = { handleChange }
+                    value = { String(temperatureState.maxTemperature ?? '') }
+                    onChange = { setTemperatureState }
                 />
-            </CustomFieldsBox>
-            <FilterButton onClick = { () => {
-                setMinTemperature(filters.minTemp);
-                setMaxTemperature(filters.maxTemp);
-                setTypeWeather(filters.type);
-            } }>
-                Filter
-            </FilterButton>
-        </FilterContainer>
+            </S.CustomFieldsBox>
+            <S.FilterButton onClick = { () => void setFiltersHandler() }>
+                {isReduxFiltersFullfiled ? 'Reset' : 'Filter'}
+            </S.FilterButton>
+        </S.FilterContainer>
     );
 };

@@ -6,8 +6,7 @@ import moment from 'moment';
 import { WeatherTypes } from '../../../bus/days/types';
 
 // WeaterTypes
-import { WeatrerImg } from '../../pages/WeatherWidget/weaterTypes';
-
+import { WeatherIcons } from '../../pages/WeatherWidget/weaterTypes';
 
 // Styles
 import { StyledDay } from './styles';
@@ -24,7 +23,7 @@ export const Day: FC<PropTypes> = ({ day, temperature, type, className, onDayCli
     return (
         <StyledDay
             className = { className }
-            img = { WeatrerImg[ type ] }
+            img = { WeatherIcons[ type ] }
             onClick = { onDayClick }>
             <p>{moment(day).format('dddd')}</p>
             <span>{temperature}</span>
